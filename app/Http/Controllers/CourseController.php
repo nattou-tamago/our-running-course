@@ -74,9 +74,16 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreCourse $request, $id)
     {
-        //
+        $course = Course::findOrFail($id);
+        $validated = $request->validated();
+        $course->fill($validated);
+        $course->save();
+
+        $request->session()->flash('status', 'ランニングコースが更新されました！');
+
+        return redirect()->route('courses.show', ['course' => $course->id]);
     }
 
     /**
