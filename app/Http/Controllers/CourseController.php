@@ -64,7 +64,7 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('courses.edit', ['course' => Course::findOrFail($id)]);
     }
 
     /**
