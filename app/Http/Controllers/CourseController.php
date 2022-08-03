@@ -94,6 +94,11 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $course = Course::findOrFail($id);
+        $course->delete();
+
+        session()->flash('status', 'ランニングコースは削除されました！');
+
+        return redirect()->route('courses.index');
     }
 }
