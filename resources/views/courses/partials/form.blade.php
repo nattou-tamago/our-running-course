@@ -1,8 +1,8 @@
 <div class="mb-3">
-    <label class="form-label" for="name">コース名</label>
-    <input class="form-control" type="text" name="name" id="name" value="{{ old('name', optional($course ?? null)->name) }}">
+    <label class="form-label" for="title">コース名</label>
+    <input class="form-control" type="text" name="title" id="title" value="{{ old('title', optional($course ?? null)->title) }}">
 </div>
-@error ('name')
+@error ('title')
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror
 <div class="mb-3">

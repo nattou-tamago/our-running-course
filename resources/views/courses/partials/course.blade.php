@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                    <h4 class="card-title h3 mb-3 text-truncate">{{ $course->name }}</h4>
+                    <h4 class="card-title h3 mb-3 text-truncate">{{ $course->title }}</h4>
                 <p class="card-text">{{ $course->distance}}km</p>
                 <p class="card-text text-truncate">
                     <small>{{ $course->location }}</small>
