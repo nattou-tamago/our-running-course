@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $course->name)
+@section('title', $course->title)
 
 @section('content')
     <div class="row">
@@ -10,7 +10,7 @@
             </div>
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">{{ $course->name }}</h5>
+                    <h5 class="card-title">{{ $course->title }}</h5>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">{{ $course->location }}</li>

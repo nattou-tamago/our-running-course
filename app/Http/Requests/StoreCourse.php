@@ -24,7 +24,7 @@ class StoreCourse extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100',
+            'title' => 'required|max:100',
             'location' => 'required|max:100',
             'distance' => 'bail|required|numeric|min:0.1|max:300',
             'description' => 'max:1000',
