@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCourse;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -15,7 +16,25 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view('courses.index', ['courses' => Course::all()]);
+        // DB::connection()->enableQueryLog();
+
+        // $courses = Course::with('reviews')->get();
+
+        // foreach ($courses as $course) {
+        //     foreach ($course->reviews as $review) {
+        //         echo $review->content;
+        //     }
+        // }
+
+        // dd(DB::getQueryLog());
+
+        // reviews_count
+        return view(
+            'courses.index',
+            ['courses' => Course::withCount('reviews')->get()]
+        );
+
+        // return view('courses.index', ['courses' => Course::all()]);
     }
 
     /**
@@ -53,7 +72,9 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        return view('courses.show', ['course' => Course::findOrFail($id)]);
+        return view('courses.show', [
+            'course' => Course::with('reviews')->findOrFail($id)
+        ]);
     }
 
     /**
