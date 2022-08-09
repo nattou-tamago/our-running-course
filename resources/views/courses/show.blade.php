@@ -38,6 +38,18 @@
         </div>
         <div class="col-12 col-md-6">
             <p>レビュー用</p>
+            @forelse($course->reviews as $review)
+                <div class="card mb-3">
+                    <div class="card-body">
+                        点：{{ $review->rating }}
+                    </div>
+                    <p class="card-text">
+                        {{ $review->content }}
+                    </p>
+                </div>
+            @empty
+                <p>レビューはまだありません。</p>
+            @endempty
         </div>
     </div>
 @endsection

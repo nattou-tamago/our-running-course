@@ -10,6 +10,13 @@
                 <p class="card-text text-truncate">
                     <small>{{ $course->location }}</small>
                 </p>
+                <p class="card-text">
+                    @if($course->reviews_count)
+                        <small>レビュー：{{ $course->reviews_count }}件</small>
+                    @else
+                        <small>レビュー：なし</small>
+                    @endif
+                </p>
                 <a href="{{ route('courses.show', ['course' => $course->id]) }}" class="btn btn-info stretched-link">コースの詳細へ</a>
             </div>
         </div>
