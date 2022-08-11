@@ -15,15 +15,21 @@
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">ログイン</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">ユーザー登録</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">ログアウト</a>
-                </li>
+                @guest
+                    <li class="nav-item">
+                        <a href="{{ route('login') }}" class="nav-link">ログイン</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('register') }}" class="nav-link">ユーザー登録</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">ログアウト（{{ Auth::user()->name }}）</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
+                @endguest
             </ul>
         </div>
     </div>
