@@ -16,10 +16,35 @@ class CourseFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->realTextBetween(5, 15, 4),
-            'location' => $this->faker->city(),
+            'title' => $this->faker->city() . $this->titleWord[rand(0, count($this->titleWord) - 1)] . 'コース',
+            'location' => $this->faker->prefecture(),
             'distance' => $this->faker->numberBetween(1, 40),
             'description' => $this->faker->realTextBetween(10, 50, 5),
         ];
     }
+
+    public $titleWord = [
+        'フォレスト',
+        'ローリング',
+        'サイレント',
+        'レッドウッド',
+        'メイプル',
+        'オーシャン',
+        'シー',
+        'スカイ',
+        'ダイアモンド',
+        'マウンテン',
+        'ビレッジ',
+        'キャンプ',
+        'リバー',
+        'ベイ',
+        'スプリング',
+        'サマー',
+        'ヒル',
+        'ヒルサイド',
+        'グリーンウッド',
+        'ゴースト',
+        'スクエア',
+        'シティ',
+    ];
 }
