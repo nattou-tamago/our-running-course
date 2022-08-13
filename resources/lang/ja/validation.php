@@ -151,6 +151,7 @@ return [
         'title' => 'コース名',
         'location' => '場所',
         'distance' => '距離',
+        'description' => '説明',
     ],
 
 ];

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCourse;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class CourseController extends Controller
 {
@@ -62,6 +63,7 @@ class CourseController extends Controller
     public function store(StoreCourse $request)
     {
         $validated = $request->validated();
+        $validated['user_id'] = $request->user()->id;
 
         $course = Course::create($validated);
 
@@ -91,7 +93,11 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        return view('courses.edit', ['course' => Course::findOrFail($id)]);
+        $course = Course::findOrFail($id);
+
+        $this->authorize($course);
+
+        return view('courses.edit', ['course' => $course]);
     }
 
     /**
@@ -104,6 +110,9 @@ class CourseController extends Controller
     public function update(StoreCourse $request, $id)
     {
         $course = Course::findOrFail($id);
+
+        $this->authorize($course);
+
         $validated = $request->validated();
         $course->fill($validated);
         $course->save();
@@ -122,6 +131,9 @@ class CourseController extends Controller
     public function destroy($id)
     {
         $course = Course::findOrFail($id);
+
+        $this->authorize($course);
+
         $course->delete();
 
         session()->flash('status', 'ランニングコースは削除されました！');

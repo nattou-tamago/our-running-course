@@ -27,7 +27,7 @@ class StoreCourse extends FormRequest
             'title' => 'required|max:100',
             'location' => 'required|max:100',
             'distance' => 'bail|required|numeric|min:0.1|max:300',
-            'description' => 'max:1000',
+            'description' => 'required|max:1000',
         ];
     }
 }
