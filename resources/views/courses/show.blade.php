@@ -43,11 +43,19 @@
             @forelse($course->reviews as $review)
                 <div class="card mb-3">
                     <div class="card-body">
-                        点：{{ $review->rating }}
+                        <h5 class="card-title">
+                             さん
+                        </h5>
+                        <p class="card-text">
+                            点：{{ $review->rating }}
+                        </p>
+                        <p class="card-text">
+                            {{ $review->content }}
+                        </p>
+                        <div class="card-text">
+                            {{ $review->created_at->diffForHumans() }}に登録
+                        </div>
                     </div>
-                    <p class="card-text">
-                        {{ $review->content }}
-                    </p>
                 </div>
             @empty
                 <p>レビューはまだありません。</p>

@@ -18,6 +18,7 @@ class ReviewFactory extends Factory
         return [
             'rating' => $this->faker->numberBetween(1, 5),
             'content' => $this->faker->realTextBetween(5, 40, 5),
+            'created_at' => $this->faker->dateTimeBetween('-2 months'),
         ];
     }
 }
