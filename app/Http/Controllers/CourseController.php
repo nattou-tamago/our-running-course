@@ -38,7 +38,7 @@ class CourseController extends Controller
         // reviews_count
         return view(
             'courses.index',
-            ['courses' => Course::withCount('reviews')->get()]
+            ['courses' => Course::latest()->withCount('reviews')->get()]
         );
 
         // return view('courses.index', ['courses' => Course::all()]);

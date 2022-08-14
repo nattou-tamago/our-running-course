@@ -20,6 +20,7 @@ class CourseFactory extends Factory
             'location' => $this->faker->prefecture(),
             'distance' => $this->faker->numberBetween(1, 40),
             'description' => $this->faker->realTextBetween(10, 50, 5),
+            'created_at' => $this->faker->dateTimeBetween('-2 months'),
         ];
     }
 
