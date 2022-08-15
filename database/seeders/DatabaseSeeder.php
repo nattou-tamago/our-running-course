@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             CoursesTableSeeder::class,
             ReviewsTableSeeder::class,
+            TagsTableSeeder::class,
+            CourseTagTableSeeder::class,
         ]);
     }
 }

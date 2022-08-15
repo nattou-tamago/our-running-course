@@ -10,7 +10,10 @@
             </div>
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">{{ $course->title }}</h5>
+                    <h5 class="card-title{{ count($course->tags) ? ' pb-2': ' pt-2'}}">{{ $course->title }}</h5>
+                    @foreach ($course->tags as $tag)
+                            <span class="badge rounded-pill bg-success badge-lg"><a href="{{ route('courses.tags.index', ['tag' => $tag->id]) }}" class="text-light text-decoration-none">{{ $tag->name }}</a></span>
+                    @endforeach
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">{{ $course->location }}</li>

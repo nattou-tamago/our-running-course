@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseTagController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -20,5 +21,7 @@ Route::get('/', HomeController::class)
     ->name('home.index');
 
 Route::resource('courses', CourseController::class);
+
+Route::get('/courses/tag/{tag}', [CourseTagController::class, 'index'])->name('courses.tags.index');
 
 Auth::routes();
