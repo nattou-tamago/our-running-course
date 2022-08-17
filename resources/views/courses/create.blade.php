@@ -8,7 +8,9 @@
         <div class="offset-1 col-10 offset-md-3 col-md-6">
             <form action="{{ route('courses.store') }}" method="POST">
                 @csrf
-                @include('courses.partials.form')
+                @include('courses.partials.form_upper')
+                @include('courses.partials.checkbox_for_create')
+                @include('courses.partials.form_bottom')
                 <div class="mb-3">
                     <button class="btn btn-primary">登録する</button>
                 </div>
