@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCourse;
 use App\Models\Course;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 
@@ -36,7 +37,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('courses.create');
+        $tags = Tag::all();
+        return view('courses.create', ['tags' => $tags]);
     }
 
     /**
@@ -51,6 +53,8 @@ class CourseController extends Controller
         $validated['user_id'] = $request->user()->id;
 
         $course = Course::create($validated);
+
+        $course->tags()->attach(request()->tags);
 
         $request->session()->flash('status', '新しいランニングコースが登録されました！');
 
@@ -78,11 +82,16 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        $course = Course::findOrFail($id);
+        $course = Course::with('tags')->findOrFail($id);
 
         $this->authorize($course);
 
-        return view('courses.edit', ['course' => $course]);
+        $tags = Tag::all();
+
+        return view('courses.edit', [
+            'course' => $course,
+            'tags' => $tags
+        ]);
     }
 
     /**
@@ -101,6 +110,8 @@ class CourseController extends Controller
         $validated = $request->validated();
         $course->fill($validated);
         $course->save();
+
+        $course->tags()->sync(request()->tags);
 
         $request->session()->flash('status', 'ランニングコースが更新されました！');
 
