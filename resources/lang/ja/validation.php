@@ -152,6 +152,9 @@ return [
         'location' => '場所',
         'distance' => '距離',
         'description' => '説明',
+        'content' => 'コメント',
+        'rating' => '評価点',
+
     ],
 
 ];

@@ -45,6 +45,7 @@ class Course extends Model
     {
         return $query->latest()
             ->withCount('reviews')
+            ->withAvg('reviews', 'rating')
             ->with('user')
             ->with('tags');
     }

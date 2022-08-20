@@ -47,25 +47,32 @@
             @forelse($course->reviews as $review)
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">
+                        <h5 class="card-title h6">
                              {{ $review->user->name }} さん
                         </h5>
-                        <p class="card-text">
+                        <p class="starability-result" data-rating="{{ $review->rating }}">
                             点：{{ $review->rating }}
                         </p>
                         <p class="card-text">
-                            {{ $review->content }}
+                            コメント：{{ $review->content }}
                         </p>
-                        <div class="card-text">
+                        <div class="card-text d-flex justify-content-between">
                             {{ $review->created_at->diffForHumans() }}に登録
+                            @can('delete', $review)
+                                <form action="{{ route('courses.reviews.destroy', ['course' => $course->id, 'review' => $review->id]) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger">削除する</button>
+                                </form>
+                            @endcan
                         </div>
-                        @can('delete', $review)
+                        {{-- @can('delete', $review)
                             <form action="{{ route('courses.reviews.destroy', ['course' => $course->id, 'review' => $review->id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-sm btn-danger">削除する</button>
                             </form>
-                        @endcan
+                        @endcan --}}
                     </div>
                 </div>
             @empty
