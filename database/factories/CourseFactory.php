@@ -16,7 +16,7 @@ class CourseFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->city() . $this->titleWord[rand(0, count($this->titleWord) - 1)] . 'コース',
+            'title' => mb_substr($this->faker->city(), 0, -1) . $this->titleWord[rand(0, count($this->titleWord) - 1)] . 'コース',
             'location' => $this->faker->prefecture(),
             'distance' => $this->faker->numberBetween(1, 40),
             'description' => $this->faker->realTextBetween(10, 50, 5),

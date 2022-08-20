@@ -6,9 +6,9 @@
         <div class="col-md-8">
             <div class="card-body">
                     <h4 class="card-title h3 mb-3 text-truncate">{{ $course->title }}</h4>
-                <p class="card-text">{{ $course->distance }}km</p>
+                <p class="card-text h5">{{ $course->distance }}km</p>
                 <p class="card-text text-truncate">
-                    <small>{{ $course->location }}</small>
+                    {{ $course->location }}
                 </p>
                 <p>
                     @foreach ($course->tags as $tag)
@@ -17,9 +17,9 @@
                 </p>
                 <p class="card-text">
                     @if($course->reviews_count)
-                        <small>レビュー：{{ $course->reviews_count }}件</small>
+                        レビュー（{{ $course->reviews_count }}件）：{{ round($course->reviews_avg_rating, 1) }} 点
                     @else
-                        <small>レビュー：なし</small>
+                        レビュー：なし
                     @endif
                 </p>
                 <a href="{{ route('courses.show', ['course' => $course->id]) }}" class="btn btn-info">コースの詳細へ</a>

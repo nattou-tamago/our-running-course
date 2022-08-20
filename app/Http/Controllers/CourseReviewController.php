@@ -22,7 +22,7 @@ class CourseReviewController extends Controller
             'user_id' => $request->user()->id,
         ]);
 
-        $request->session()->flash('status', 'レビューが投稿されました！');
+        $request->session()->flash('status', 'レビューを投稿しました！');
 
         return redirect()->back();
     }
