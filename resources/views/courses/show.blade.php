@@ -18,9 +18,9 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">{{ $course->location }}</li>
                     <li class="list-group-item">距離：{{ $course->distance }} km</li>
-                    <li class="list-group-item">登録者：{{ $course->user->name }}</li>
+                    <li class="list-group-item">登録者：{{ $course->user->name }} さん</li>
                     <li class="list-group-item">
-                        <p>{{ $course->description }}</p>
+                        {{ $course->description }}
                     </li>
                 </ul>
                 @can('update', $course)
@@ -42,12 +42,13 @@
             </div>
         </div>
         <div class="col-12 col-md-6">
-            <p>レビュー用</p>
+            @include('reviews.form')
+
             @forelse($course->reviews as $review)
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title">
-                             さん
+                             {{ $review->user->name }} さん
                         </h5>
                         <p class="card-text">
                             点：{{ $review->rating }}
@@ -58,6 +59,13 @@
                         <div class="card-text">
                             {{ $review->created_at->diffForHumans() }}に登録
                         </div>
+                        @can('delete', $review)
+                            <form action="{{ route('courses.reviews.destroy', ['course' => $course->id, 'review' => $review->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger">削除する</button>
+                            </form>
+                        @endcan
                     </div>
                 </div>
             @empty

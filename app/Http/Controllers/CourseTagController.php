@@ -12,7 +12,9 @@ class CourseTagController extends Controller
         $tag = Tag::findOrFail($tag);
 
         return view('courses.index', [
-            'courses' => $tag->courses()->with('tags')->get(),
+            'courses' => $tag->courses()
+                ->latestWithRelations()
+                ->get(),
         ]);
     }
 }

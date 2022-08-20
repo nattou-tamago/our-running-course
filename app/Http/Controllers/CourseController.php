@@ -26,7 +26,7 @@ class CourseController extends Controller
         // reviews_count
         return view(
             'courses.index',
-            ['courses' => Course::latest()->withCount('reviews')->with('tags')->get()]
+            ['courses' => Course::latestWithRelations()->get()]
         );
     }
 
@@ -70,7 +70,8 @@ class CourseController extends Controller
     public function show($id)
     {
         return view('courses.show', [
-            'course' => Course::with('reviews')->with('tags')->with('user')->findOrFail($id)
+            'course' => Course::with('reviews', 'tags', 'user', 'reviews.user')
+            ->findOrFail($id)
         ]);
     }
 
