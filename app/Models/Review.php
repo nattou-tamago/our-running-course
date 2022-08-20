@@ -10,9 +10,16 @@ class Review extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'rating', 'content'];
+
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function scopeLatest(Builder $query)

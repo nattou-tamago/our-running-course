@@ -41,6 +41,14 @@ class Course extends Model
         return $query->orderBy(static::CREATED_AT, 'desc');
     }
 
+    public function scopeLatestWithRelations(Builder $query)
+    {
+        return $query->latest()
+            ->withCount('reviews')
+            ->with('user')
+            ->with('tags');
+    }
+
     public static function boot()
     {
         parent::boot();

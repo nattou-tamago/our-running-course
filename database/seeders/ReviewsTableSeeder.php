@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Course;
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ReviewsTableSeeder extends Seeder
@@ -24,8 +25,11 @@ class ReviewsTableSeeder extends Seeder
 
         $reviewsCount = (int)$this->command->ask('How many reviews would you like?', 200);
 
-        Review::factory($reviewsCount)->make()->each(function ($review) use ($courses) {
+        $users = User::all();
+
+        Review::factory($reviewsCount)->make()->each(function ($review) use ($courses, $users) {
             $review->course_id = $courses->random()->id;
+            $review->user_id = $users->random()->id;
             $review->save();
         });
     }
