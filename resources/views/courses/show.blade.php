@@ -6,7 +6,6 @@
     <div class="row">
         <div class="col-12 col-md-6">
             <div>
-                <p>image用</p>
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     @if (count($course->images) > 0)
                     <div class="carousel-inner">
@@ -29,7 +28,11 @@
                             </button>
                         @endif
                     @else
-                        <p>デフォルト画像を表示</p>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{ asset('images/no_image.png') }}" alt="no_image" class="d-block w-100 img-thumbnail">
+                            </div>
+                        </div>
                     @endif
                 </div>
             </div>
