@@ -1,7 +1,11 @@
 <div class="card mb-3">
     <div class="row">
         <div class="col-md-4">
-            <p>image用</p>
+            @if ((count($course->images) > 0))
+                <img class="img-fluid" src="{{ asset('../storage/' . $course->images[0]->path) }}" alt="course-image">
+            @else
+                <p>デフォルト画像を表示</p>
+            @endif
         </div>
         <div class="col-md-8">
             <div class="card-body">

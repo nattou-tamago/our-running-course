@@ -6,7 +6,7 @@
     <div class="row">
         <h1 class="text-center mb-3">コースの編集</h1>
         <div class="offset-1 col-10 offset-md-3 col-md-6">
-            <form action="{{ route('courses.update', ['course' => $course->id]) }}" method="POST">
+            <form action="{{ route('courses.update', ['course' => $course->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 @include('courses.partials.form_upper')
