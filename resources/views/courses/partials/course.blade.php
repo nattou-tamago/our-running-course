@@ -4,7 +4,7 @@
             @if ((count($course->images) > 0))
                 <img class="img-fluid" src="{{ asset('../storage/' . $course->images[0]->path) }}" alt="course-image">
             @else
-                <p>デフォルト画像を表示</p>
+                <img class="img-fluid" src="{{ asset('images/no_image.png') }}" alt="no_image">
             @endif
         </div>
         <div class="col-md-8">
