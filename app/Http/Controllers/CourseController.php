@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCourse;
 use App\Models\Course;
+use App\Models\Image;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -53,6 +54,20 @@ class CourseController extends Controller
         $validated['user_id'] = $request->user()->id;
 
         $course = Course::create($validated);
+
+        if ($request->hasFile('images')) {
+            $files = $request->file('images');
+            foreach ($files as $file) {
+                $path = Storage::disk('public')->putFile('course_images', $file);
+
+                $course->images()->save(
+                    Image::create([
+                        'path' => $path,
+                        'course_id' => $course->id
+                    ])
+                );
+            }
+        };
 
         $course->tags()->attach(request()->tags);
 
@@ -110,6 +125,9 @@ class CourseController extends Controller
 
         $validated = $request->validated();
         $course->fill($validated);
+
+
+
         $course->save();
 
         $course->tags()->sync(request()->tags);

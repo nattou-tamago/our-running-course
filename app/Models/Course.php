@@ -36,6 +36,11 @@ class Course extends Model
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
+
     public function scopeLatest(Builder $query)
     {
         return $query->orderBy(static::CREATED_AT, 'desc');
@@ -47,7 +52,8 @@ class Course extends Model
             ->withCount('reviews')
             ->withAvg('reviews', 'rating')
             ->with('user')
-            ->with('tags');
+            ->with('tags')
+            ->with('images');
     }
 
     public static function boot()

@@ -7,6 +7,31 @@
         <div class="col-12 col-md-6">
             <div>
                 <p>image用</p>
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    @if (count($course->images) > 0)
+                    <div class="carousel-inner">
+                        @foreach ($course->images as $image)
+                        <div class="carousel-item @if($loop->first) active @endif">
+                            <img src="{{ asset('../storage/' . $image->path) }}" class="d-block w-100 img-thumbnail" alt="course-image">
+                            {{-- <img src="{{ Storage::url($image->path) }}" alt="course-image"> --}}
+                            {{-- <img src="{{ $image->url() }}" alt=""> --}}
+                        </div>
+                        @endforeach
+                    </div>
+                        @if (count($course->images) > 1)
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                            </button>
+                        @endif
+                    @else
+                        <p>デフォルト画像を表示</p>
+                    @endif
+                </div>
             </div>
             <div class="card mb-3">
                 <div class="card-body">
