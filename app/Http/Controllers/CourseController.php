@@ -126,7 +126,32 @@ class CourseController extends Controller
         $validated = $request->validated();
         $course->fill($validated);
 
+        if ($request->hasFile('images')) {
+            $files = $request->file('images');
 
+            if (count($course->images) + count($files) - (count($request->input('deleteImages') ?? [])) > 3) {
+                return back()->with('number-of-images-error', 'アップロードできる画像は3枚以内です。');
+            }
+
+            foreach ($files as $file) {
+                $path = Storage::disk('public')->putFile('course_images', $file);
+
+                $course->images()->save(
+                    Image::create([
+                        'path' => $path,
+                        'course_id' => $course->id
+                    ])
+                );
+            }
+        }
+
+        if ($request->input('deleteImages')) {
+            foreach ($request->input('deleteImages') as $deleteImage) {
+                $deleteImageArray = json_decode($deleteImage, true);
+                Storage::disk('public')->delete($deleteImageArray['path']);
+                Image::where('id', $deleteImageArray['id'])->delete();
+            }
+        }
 
         $course->save();
 
