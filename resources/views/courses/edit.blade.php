@@ -11,6 +11,7 @@
                 @method('PUT')
                 @include('courses.partials.form_upper')
                 @include('courses.partials.checkbox_for_edit')
+                @include('courses.partials.file_input_for_edit')
                 @include('courses.partials.form_bottom')
                 <div class="mb-3">
                     <button class="btn btn-primary">更新する</button>
