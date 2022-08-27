@@ -4,6 +4,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseReviewController;
 use App\Http\Controllers\CourseTagController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,5 +27,7 @@ Route::resource('courses', CourseController::class);
 Route::get('/courses/tag/{tag}', [CourseTagController::class, 'index'])->name('courses.tags.index');
 
 Route::resource('courses.reviews', CourseReviewController::class)->only(['store', 'destroy']);
+
+Route::resource('users', UserController::class)->only(['show', 'edit', 'update']);
 
 Auth::routes();
