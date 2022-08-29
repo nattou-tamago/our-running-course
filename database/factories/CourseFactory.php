@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Course;
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Http;
 
 class CourseFactory extends Factory
 {
@@ -15,12 +17,26 @@ class CourseFactory extends Factory
      */
     public function definition()
     {
+        $location = $this->location[rand(0, count($this->location) - 1)];
+
+        $mapboxToken = config('my-app.mapbox_token');
+
+        $url = "https://api.mapbox.com/geocoding/v5/mapbox.places/{$location}.json?limit=1&language=ja&access_token={$mapboxToken}";
+
+        $response = Http::get($url);
+
+        $longitude = $response->json()['features'][0]['geometry']['coordinates'][0];
+        $latitude = $response->json()['features'][0]['geometry']['coordinates'][1];
+
+        $position = new Point($latitude, $longitude, 4326);
+
         return [
             'title' => mb_substr($this->faker->city(), 0, -1) . $this->titleWord[rand(0, count($this->titleWord) - 1)] . 'コース',
-            'location' => $this->location[rand(0, count($this->location) - 1)],
+            'location' => $location,
             'distance' => $this->faker->numberBetween(1, 40),
             'description' => $this->faker->realTextBetween(10, 50, 5),
             'created_at' => $this->faker->dateTimeBetween('-2 months'),
+            'position' => $position,
         ];
     }
 

@@ -6,8 +6,12 @@ use App\Http\Requests\StoreCourse;
 use App\Models\Course;
 use App\Models\Image;
 use App\Models\Tag;
+use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Js;
 
 class CourseController extends Controller
 {
@@ -24,7 +28,6 @@ class CourseController extends Controller
      */
     public function index()
     {
-        // reviews_count
         return view(
             'courses.index',
             ['courses' => Course::latestWithRelations()->get()]
@@ -53,7 +56,11 @@ class CourseController extends Controller
         $validated = $request->validated();
         $validated['user_id'] = $request->user()->id;
 
-        $course = Course::create($validated);
+        $course = Course::make($validated);
+
+        $course->position = $this->getPosition($validated['location']);
+
+        $course->save();
 
         if ($request->hasFile('images')) {
             $files = $request->file('images');
@@ -85,8 +92,7 @@ class CourseController extends Controller
     public function show($id)
     {
         return view('courses.show', [
-            'course' => Course::with('reviews', 'tags', 'user', 'reviews.user')
-            ->findOrFail($id)
+            'course' => Course::with('reviews', 'tags', 'user', 'reviews.user')->findOrFail($id),
         ]);
     }
 
@@ -124,7 +130,11 @@ class CourseController extends Controller
         $this->authorize($course);
 
         $validated = $request->validated();
+
+
         $course->fill($validated);
+
+        $course->position = $this->getPosition($validated['location']);
 
         if ($request->hasFile('images')) {
             $files = $request->file('images');
@@ -179,5 +189,19 @@ class CourseController extends Controller
         session()->flash('status', 'ランニングコースは削除されました！');
 
         return redirect()->route('courses.index');
+    }
+
+    private function getPosition(String $location)
+    {
+        $mapboxToken = config('my-app.mapbox_token');
+
+        $url = "https://api.mapbox.com/geocoding/v5/mapbox.places/{$location}.json?limit=1&language=ja&access_token={$mapboxToken}";
+
+        $response = Http::get($url);
+
+        $longitude = $response->json()['features'][0]['geometry']['coordinates'][0];
+        $latitude = $response->json()['features'][0]['geometry']['coordinates'][1];
+
+        return new Point($latitude, $longitude, 4326);
     }
 }
