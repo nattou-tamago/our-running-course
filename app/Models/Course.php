@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Course extends Model
 {
     use SoftDeletes;
+    use SpatialTrait;
 
     protected $fillable = [
         'title',
@@ -17,6 +19,10 @@ class Course extends Model
         'distance',
         'description',
         'user_id',
+    ];
+
+    protected $spatialFields = [
+        'position',
     ];
 
     use HasFactory;

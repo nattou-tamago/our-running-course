@@ -70,6 +70,9 @@
             </div>
         </div>
         <div class="col-12 col-md-6">
+
+            <div id='mapForShow' style='width: 100%; height: 300px;' class="mb-3"></div>
+
             @include('reviews.form')
 
             @forelse($course->reviews as $review)
@@ -94,13 +97,6 @@
                                 </form>
                             @endcan
                         </div>
-                        {{-- @can('delete', $review)
-                            <form action="{{ route('courses.reviews.destroy', ['course' => $course->id, 'review' => $review->id]) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-danger">削除する</button>
-                            </form>
-                        @endcan --}}
                     </div>
                 </div>
             @empty
@@ -108,4 +104,11 @@
             @endempty
         </div>
     </div>
+
+@endsection
+
+@section('scripts')
+
+    @include('courses.partials.scripts_for_show')
+
 @endsection

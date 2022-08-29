@@ -20,7 +20,7 @@
 
 @section('scripts')
     <script>
-        const mapToken = "{{ env('MAPBOX_TOKEN') }}";
+        const mapToken = "{{ config('my-app.mapbox_token') }}";
     </script>
     <script src="{{ asset('js/clusterMap.js') }}"></script>
 @endsection
