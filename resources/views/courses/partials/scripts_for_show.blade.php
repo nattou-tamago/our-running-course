@@ -1,7 +1,7 @@
 <script>
-    const position = @json([$course->position->getLng(), $course->position->getLat()]);
+    const position = {{ Js::from([$course->position->getLng(), $course->position->getLat()]) }};
 
-    const courseTitle = @json($course->title);
+    const courseTitle = {{ Js::from($course->title) }};
 
     mapboxgl.accessToken = "{{ config('my-app.mapbox_token') }}";
     const map = new mapboxgl.Map({
