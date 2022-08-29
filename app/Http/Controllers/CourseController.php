@@ -28,10 +28,15 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view(
-            'courses.index',
-            ['courses' => Course::latestWithRelations()->get()]
-        );
+        $courses = Course::latestWithRelations()->get();
+
+        $coursesGeoJson = $this->getCoursesGeoJson($courses);
+
+        return view('courses.index',[
+            'courses' => $courses,
+            'coursesGeoJson' => $coursesGeoJson,
+        ]);
+
     }
 
     /**
@@ -203,5 +208,28 @@ class CourseController extends Controller
         $latitude = $response->json()['features'][0]['geometry']['coordinates'][1];
 
         return new Point($latitude, $longitude, 4326);
+    }
+
+    private function getCoursesGeoJson($courses)
+    {
+        $coursesGeoJson = array('type' => 'FeatureCollection', 'features' => array());
+
+        foreach ($courses as $course) {
+            $features = array(
+                    'type' => 'Feature',
+                    'properties' => array(
+                        'id' => $course->id,
+                        'title' => $course->title,
+                        'distance' => $course->distance
+                    ),
+                    "geometry" => array(
+                        'type' => 'Point',
+                        'coordinates' => array($course->position->getLng(), $course->position->getLat())
+                    )
+            );
+            array_push($coursesGeoJson['features'], $features);
+        }
+
+        return $coursesGeoJson;
     }
 }

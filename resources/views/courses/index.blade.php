@@ -19,8 +19,7 @@
 @endsection
 
 @section('scripts')
-    <script>
-        const mapToken = "{{ config('my-app.mapbox_token') }}";
-    </script>
-    <script src="{{ asset('js/clusterMap.js') }}"></script>
+
+    @include('courses.partials.scripts_for_index')
+
 @endsection
