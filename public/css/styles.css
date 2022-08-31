@@ -1,0 +1,22 @@
+#home-body {
+  height: 100vh;
+  background-image: url('../images/home_image.jpg');
+  background-color: rgba(255, 255, 255, 0.3);
+  background-blend-mode: lighten;
+  background-size: cover;
+  background-position: center;
+}
+
+#home-main, #home-index {
+  height: 75%;
+}
+
+.btn-home {
+  color: white;
+  background-color: darkorange;
+  border: orange;
+}
+
+.nav-bg {
+  background-color: rgba(252, 232, 232, 1);
+}
