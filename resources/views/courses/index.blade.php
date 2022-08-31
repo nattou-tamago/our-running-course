@@ -4,9 +4,11 @@
 
 @section('content')
 
-            <div class="col-12 mb-3">
-                <div id='map' style="height: 450px;"></div>
-            </div>
+            @if (Request::routeIs('courses.index'))
+                <div class="col-12 mb-3">
+                    <div id='map' style="height: 450px;"></div>
+                </div>
+            @endif
 
             @forelse($courses as $course)
 
@@ -18,8 +20,10 @@
 
 @endsection
 
-@section('scripts')
+@if (Request::routeIs('courses.index'))
+    @section('scripts')
 
-    @include('courses.partials.scripts_for_index')
+        @include('courses.partials.scripts_for_index')
 
-@endsection
+    @endsection
+@endif
