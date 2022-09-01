@@ -6,7 +6,11 @@
     <div class="mb-3">
         @foreach ($course->images as $i => $image)
             <div class="form-check-inline">
-                <img src="{{ asset('../storage/' . $image->path) }}" class="img-thumbnail" alt="course_image" width="100">
+                @if (config('app.env') === 'production')
+                    <img src="{{ Storage::disk('s3')->url($image->path) }}" class="img-thumbnail" alt="course_image" width="100">
+                @else
+                    <img src="{{ asset('../storage/' . $image->path) }}" class="img-thumbnail" alt="course_image" width="100">
+                @endif
                 <input type="checkbox" name="deleteImages[]" id="image-{{ $i }}" value="{{ $image }}">
                 <label for="image-{{ $i }}">削除する</label>
             </div>

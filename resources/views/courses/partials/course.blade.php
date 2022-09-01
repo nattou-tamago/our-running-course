@@ -2,9 +2,17 @@
     <div class="row">
         <div class="col-md-4">
             @if ((count($course->images) > 0))
-                <img class="img-fluid" src="{{ asset('../storage/' . $course->images[0]->path) }}" alt="course-image">
+                @if (config('app.env') === 'production')
+                    <img class="img-fluid" src="{{ Storage::disk('s3')->url($course->images[0]->path) }}" alt="course-image">
+                @else
+                    <img class="img-fluid" src="{{ asset('../storage/' . $course->images[0]->path) }}" alt="course-image">
+                @endif
             @else
-                <img class="img-fluid" src="{{ asset('images/no_image.png') }}" alt="no_image">
+                @if (config('app.env') === 'production')
+                    <img class="img-fluid" src="{{ secure_asset('images/no_image.png') }}" alt="no_image">
+                @else
+                    <img class="img-fluid" src="{{ asset('images/no_image.png') }}" alt="no_image">
+                @endif
             @endif
         </div>
         <div class="col-md-8">

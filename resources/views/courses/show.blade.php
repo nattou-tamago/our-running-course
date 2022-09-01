@@ -11,9 +11,11 @@
                     <div class="carousel-inner">
                         @foreach ($course->images as $image)
                         <div class="carousel-item @if($loop->first) active @endif">
-                            <img src="{{ asset('../storage/' . $image->path) }}" class="d-block w-100 img-thumbnail" alt="course-image">
-                            {{-- <img src="{{ Storage::url($image->path) }}" alt="course-image"> --}}
-                            {{-- <img src="{{ $image->url() }}" alt=""> --}}
+                            @if (config('app.env') === 'production')
+                                <img src="{{ Storage::disk('s3')->url($image->path) }}" class="d-block w-100 img-thumbnail" alt="course-image">
+                            @else
+                                <img src="{{ asset('../storage/' . $image->path) }}" class="d-block w-100 img-thumbnail" alt="course-image">
+                            @endif
                         </div>
                         @endforeach
                     </div>
@@ -30,7 +32,11 @@
                     @else
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="{{ asset('images/no_image.png') }}" alt="no_image" class="d-block w-100 img-thumbnail">
+                                @if (config('app.env') === 'production')
+                                    <img src="{{ secure_asset('images/no_image.png') }}" alt="no_image" class="d-block w-100 img-thumbnail">
+                                @else
+                                    <img src="{{ asset('images/no_image.png') }}" alt="no_image" class="d-block w-100 img-thumbnail">
+                                @endif
                             </div>
                         </div>
                     @endif

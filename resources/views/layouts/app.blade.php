@@ -10,11 +10,21 @@
     @endif
 
     @if (Request::routeIs('courses.show'))
-    <link rel="stylesheet" href="{{ asset('css/stars.css') }}">
+        @if(config('app.env') === 'production')
+        <link rel="stylesheet" href="{{ secure_asset('css/stars.css') }}">
+        @else
+        <link rel="stylesheet" href="{{ asset('css/stars.css') }}">
+        @endif
     @endif
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+
+    @if(config('app.env') === 'production')
+    <link rel="stylesheet" href="{{ secure_asset('css/styles.css') }}">
+    @else
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    @endif
+
     <script src="{{ mix('js/app.js') }}" defer></script>
     <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.js"></script>
     <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>

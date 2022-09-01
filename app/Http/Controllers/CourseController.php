@@ -70,7 +70,13 @@ class CourseController extends Controller
         if ($request->hasFile('images')) {
             $files = $request->file('images');
             foreach ($files as $file) {
-                $path = Storage::disk('public')->putFile('course_images', $file);
+
+                if (config('app.env') === 'production') {
+                    $path = Storage::disk('s3')->putFile('course_images', $file);
+                } else {
+                    $path = Storage::disk('public')->putFile('course_images', $file);
+                }
+
 
                 $course->images()->save(
                     Image::create([
@@ -149,7 +155,12 @@ class CourseController extends Controller
             }
 
             foreach ($files as $file) {
-                $path = Storage::disk('public')->putFile('course_images', $file);
+
+                if (config('app.env') === 'production') {
+                    $path = Storage::disk('s3')->putFile('course_images', $file);
+                } else {
+                    $path = Storage::disk('public')->putFile('course_images', $file);
+                }
 
                 $course->images()->save(
                     Image::create([
@@ -163,7 +174,12 @@ class CourseController extends Controller
         if ($request->input('deleteImages')) {
             foreach ($request->input('deleteImages') as $deleteImage) {
                 $deleteImageArray = json_decode($deleteImage, true);
-                Storage::disk('public')->delete($deleteImageArray['path']);
+
+                if (config('app.env') === 'production') {
+                    Storage::disk('s3')->delete($deleteImageArray['path']);
+                } else {
+                    Storage::disk('public')->delete($deleteImageArray['path']);
+                }
                 Image::where('id', $deleteImageArray['id'])->delete();
             }
         }
